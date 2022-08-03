@@ -9,8 +9,8 @@ import Foundation
 import Combine
 
 
-enum iTunesAPI {
-    static func getSongs(artist: String) -> AnyPublisher<iTunesResponse, iTunesError> {
+class TunesAPI {
+    func getSongs(artist: String) -> AnyPublisher<iTunesResponse, iTunesError> {
         let term = artist.replacingOccurrences(of: " ", with: "+")
         let url = URL(string: "https://itunes.apple.com/search?term=\(term)&entity=song")!
         print(url)
@@ -25,9 +25,10 @@ enum iTunesAPI {
                 guard
                     let httpURLResponse = response.response as? HTTPURLResponse,
                     httpURLResponse.statusCode == 200
-                    else {
+                else {
                     throw iTunesError.statusCode
                 }
+                print(response.data)
                 return response.data
             }
             .decode(type: iTunesResponse.self, decoder: JSONDecoder())

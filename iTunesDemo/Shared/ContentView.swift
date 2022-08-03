@@ -8,9 +8,9 @@
 import SwiftUI
 
 struct ContentView: View {
-    @State private var artist: String = ""
+    @StateObject var songs = Songs()
+    @State var artist: String = ""
     @FocusState private var textFocused: Bool
-    @State var songs : [iTunesResponse.Track] = []
     
     var body: some View {
         VStack {
